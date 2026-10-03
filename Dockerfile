@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-# Install modern system dependencies required by OpenCV and PaddleOCR
+# System dependencies required by OpenCV, PaddleOCR and FFmpeg
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     libsm6 \
@@ -14,24 +14,23 @@ WORKDIR /app
 
 COPY . .
 
-ENV OCR_LANGUAGE=en
-ENV OCR_DEVICE=cpu
-ENV MAX_FILE_SIZE_MB=10
-ENV UPLOAD_DIR=uploads
-ENV OUTPUT_DIR=outputs
-ENV CORS_ORIGINS=https://vercel.app
+ENV OCR_LANGUAGE=en \
+    OCR_DEVICE=cpu \
+    MAX_FILE_SIZE_MB=10 \
+    UPLOAD_DIR=uploads \
+    OUTPUT_DIR=outputs \
+    CORS_ORIGINS=https://document-ocr-ajaysah.vercel.app
 
-# Upgrade pip to modern standard specifications
 RUN python -m pip install --upgrade pip
 
-# FIX: Added 'www.', explicit sub-directories, and the '--pre' flags for beta versions
-RUN python -m pip install --pre paddlepaddle==3.0.0b2 -i https://paddlepaddle.org.cn --extra-index-url https://pypi.org
+# Install a stable PaddlePaddle version compatible with Python 3.12
+RUN python -m pip install paddlepaddle==3.3.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
 
-# Install additional requirements
-RUN pip install -r requirements.txt
+# Install application dependencies
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
 ENV PORT=10000
-EXPOSE ${PORT}
 
-# Shell form lets Render bind its custom internal port variables dynamically
-CMD uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+EXPOSE 10000
+
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT}"]
