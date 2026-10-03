@@ -7,7 +7,7 @@ export default defineConfig({
         port: 5173,
         proxy: {
             // Dev-only proxy so the browser talks to FastAPI same-origin.
-            '/api': { target: 'http://localhost:8000', changeOrigin: true },
+            '/api': { target: 'https://document-ocr-53qt.onrender.com', changeOrigin: true },
         },
     },
 })
