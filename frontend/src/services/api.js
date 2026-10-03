@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const client = axios.create({ baseURL: '/api', timeout: 180000 })
+const client = axios.create({
+    baseURL: 'https://document-ocr-53qt.onrender.com/api',
+    timeout: 180000,
+})
 
 export async function getHealth() {
     const { data } = await client.get('/health')
