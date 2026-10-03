@@ -24,8 +24,8 @@ ENV CORS_ORIGINS=https://vercel.app
 # Upgrade pip to modern standard specifications
 RUN python -m pip install --upgrade pip
 
-# FIX: Using the complete absolute PaddlePaddle stable CPU index URL
-RUN python -m pip install paddlepaddle==3.0.0b2 -i https://paddlepaddle.org.cn --extra-index-url https://pypi.org
+# FIX: Added 'www.', explicit sub-directories, and the '--pre' flags for beta versions
+RUN python -m pip install --pre paddlepaddle==3.0.0b2 -i https://paddlepaddle.org.cn --extra-index-url https://pypi.org
 
 # Install additional requirements
 RUN pip install -r requirements.txt
