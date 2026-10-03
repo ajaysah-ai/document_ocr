@@ -9,6 +9,7 @@ ENV OCR_DEVICE=cpu
 ENV MAX_FILE_SIZE_MB=10
 ENV UPLOAD_DIR=uploads
 ENV OUTPUT_DIR=outputs
+ENV CORS_ORIGINS=https://document-ocr-ajaysah.vercel.app
 
 RUN python -m pip install --upgrade pip
 RUN python -m pip install paddlepaddle==3.3.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
