@@ -17,6 +17,7 @@ COPY . .
 VOLUME /app/uploads
 VOLUME /app/outputs
 
+
 ENV OCR_LANGUAGE=en \
     OCR_DEVICE=cpu \
     MAX_FILE_SIZE_MB=10 \
